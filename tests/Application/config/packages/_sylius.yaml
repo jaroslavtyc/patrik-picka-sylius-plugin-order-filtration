@@ -1,0 +1,63 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+
+parameters:
+    sylius_core.public_dir: '%kernel.project_dir%/public'
+
+sylius_shop:
+    product_grid:
+        include_all_descendants: true
+
+sylius_api:
+    enabled: true
+
+sylius_grid:
+    grids:
+        sylius_admin_order:
+            filters:
+                payment_state:
+                    type: select
+                    label: sylius.ui.payment_state
+                    form_options:
+                        choices:
+                            sylius.ui.awaiting_payment: new
+                            sylius.ui.processing: processing
+                            sylius.ui.paid: completed
+                            sylius.ui.cancelled: cancelled
+                            sylius.ui.refunded: refunded
+                    options:
+                        field: payments.state
+                shipping_state:
+                    type: select
+                    label: sylius.ui.shipping_state
+                    form_options:
+                        choices:
+                            sylius.ui.cart: cart
+                            sylius.ui.ready: ready
+                            sylius.ui.shipped: shipped
+                            sylius.ui.cancelled: canceled
+                    options:
+                        field: shipments.state
+                unprocessed_orders:
+                    type: fields_value
+                    label: sylius.ui.unprocessed_orders
+                    options:
+                        fields_filters:
+                            payments.state:
+                                expression: notEquals
+                                value: paid
+                            shipments.state:
+                                expression: notEquals
+                                value: shipped
+                            state:
+                                expression: notEquals
+                                value: fulfilled
+    templates:
+        filter:
+            fields_value: 'Grid/Filter/fields_value.html.twig'

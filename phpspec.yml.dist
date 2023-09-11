@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Ptb\ExtendedOrdersFiltrationPlugin
+        psr4_prefix: Ptb\ExtendedOrdersFiltrationPlugin
