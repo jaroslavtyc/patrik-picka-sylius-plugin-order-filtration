@@ -10,8 +10,7 @@
 </p>
 
 <p>Pokud že to použijeme v našem případě pro filtraci nezpracovaných objednávek tak by poté filter gridu pro sylius_admin_order vypadal takto:</p>
-<code>
-sylius_grid:
+<code>sylius_grid:
     grids:
     sylius_admin_order:
         filters:
@@ -28,5 +27,4 @@ sylius_grid:
                     value: shipped
                   state:
                     expression: notEquals
-                    value: fulfilled
-</code>
+                    value: fulfilled</code>
