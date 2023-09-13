@@ -6,34 +6,52 @@
 
 <p>
     Plugin využíva na filtrování dle stavu platby a dopravy built in select filtr, který je k dispozici v základu.
-    Pro filtrování nezpracovaných objednávek přidáva plugin navíc nový filter (Fields value filter), který umožňuje filtrovat v gridu podle specifických hodnot ruzých polí.
+    Pro filtrování nezpracovaných objednávek přidáva plugin navíc nový filter (Fields value filter), který umožňuje filtrovat v gridu podle specifických hodnot růzých polí.
 </p>
 
-<p>Pokud že to použijeme v našem případě pro filtraci nezpracovaných objednávek tak by poté filter gridu pro sylius_admin_order vypadal takto:</p>
 
-```yaml
-sylius_grid:
-  grids:
-    sylius_admin_order:
-      filters:
-        unprocessed_orders:
-          type: fields_value
-          label: sylius.ui.unprocessed_orders
-          options:
-            fields_filters:
-              payments.state:
-                expression: notEquals
-                value: paid
-              shipments.state:
-                expression: notEquals
-                value: shipped
-              state:
-                expression: notEquals
-                value: fulfilled
-  templates:
-    filter:
-      fields_value: 'Grid/Filter/fields_value.html.twig'
+Nový filter podporuje tyto expressions: `equals`, `notEquals`, `in`, `notIn`.
+
+
+## Instalace
+
+- do composer.json přidejte repositář
+```json
+{
+    "repositories": {
+        "ExtendedOrdersFiltrationPlugin": {
+            "type": "git",
+            "url": "https://github.com/PatrikPicka/sylius-plugin-order-filtration.git"
+        }
+    }
+}
 ```
 
-<p>Nový filter podporuje tyto expressions: 'equals', 'notEquals', 'in', 'notIn'.</p>
-<p>Pro instalaci stačí pouze filter zaregistrovat (importovat) jako service do services.yaml a nezapomenout přidat gridům template pro nové filtrovací pole 'fields_value.html.twig'.</p>
+- stáhněte plugin
+```shell
+composer require ptb/sylius-extended-order-filter:dev-master
+```
+
+- do `config/bundles.php` přidejte
+```php
+// config/bundles.php
+return [
+    // ...
+    Ptb\ExtendedOrdersFiltrationPlugin\ExtendedOrdersFiltrationPlugin::class => ['all' => true],
+```
+ 
+- do `config/_sylius.yaml` přidejte
+```yaml
+# config/_sylius.yaml
+
+imports:
+  # ...
+  - { resource: "@ExtendedOrdersFiltrationPlugin/Resources/config/config.yaml" }
+```
+
+- obnovte cache aplikace
+```shell
+php ./bin/console cache:clear
+```
+
+- ověřte, že v adminu v objenávkách je filtr rozšířený o checkbox pro filtr neuzavřených objednávek http://localhost/admin/orders/
