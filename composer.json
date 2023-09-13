@@ -1,14 +1,18 @@
 {
+    "name": "ptb/sylius-extended-order-filter",
     "type": "sylius-plugin",
     "keywords": [
         "sylius",
-        "sylius-plugin"
+        "sylius-plugin",
+        "admin",
+        "order",
+        "filter"
     ],
     "license": "proprietary",
     "require": {
         "php": "^8.0",
         "sylius/sylius": "^1.12",
-        "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
+        "sylius/mailer-bundle": "^1.8 || ^2.0@beta",
         "symfony/webpack-encore-bundle": "^1.15"
     },
     "require-dev": {
@@ -60,13 +64,8 @@
     "autoload": {
         "psr-4": {
             "Ptb\\ExtendedOrdersFiltrationPlugin\\": "src/",
-            "Tests\\Ptb\\ExtendedOrdersFiltrationPlugin\\": "tests/"
+            "Tests\\Ptb\\ExtendedOrdersFiltrationPlugin\\Application\\": "tests/Application/src/"
         }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/Application/Kernel.php"
-        ]
     },
     "scripts": {
         "post-install-cmd": [

@@ -39,3 +39,6 @@ sylius_grid:
               state:
                 expression: notEquals
                 value: fulfilled
+  templates:
+    filter:
+      fields_value: '@ExtendedOrdersFiltrationPlugin/Grid/Filter/fields_value.html.twig'

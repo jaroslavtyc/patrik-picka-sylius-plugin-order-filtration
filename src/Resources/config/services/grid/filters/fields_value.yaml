@@ -2,7 +2,6 @@ services:
   sylius_ptb.sylius_orders_extended_filtration_plugin.grid.filter.fields_value:
     class: 'Ptb\ExtendedOrdersFiltrationPlugin\Grid\Filter\FieldsValueFilter'
     tags:
-      -
-        name: sylius.grid_filter
-        type: fields_value
+      - name: 'sylius.grid_filter'
+        type: 'fields_value'
         form_type: 'Ptb\ExtendedOrdersFiltrationPlugin\Form\Type\Filter\FieldsValueFilterType'
